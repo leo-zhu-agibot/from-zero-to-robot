@@ -11,7 +11,8 @@ class Talker : public rclcpp::Node
 public:
   // ← 对应 Python 的 __init__。 ": Node("talker"), count_(0)" 是初始化列表：
   //    Node("talker") 对应 super().__init__('talker')；count_(0) 对应 self.i = 0
-  Talker() : Node("talker"), count_(0)
+  Talker()
+  : Node("talker"), count_(0)
   {
     // ← 对应 self.publisher_ = self.create_publisher(String, 'chatter', 10)
     //    注意 C++ 用 <std_msgs::msg::String> 这个模板参数指定消息类型
