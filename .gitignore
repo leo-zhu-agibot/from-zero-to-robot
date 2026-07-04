@@ -1,4 +1,11 @@
+# ROS2 / colcon 构建生成物，不提交
 build/
 install/
 log/
+
+# Python 缓存
+__pycache__/
+*.pyc
+
+# VS Code 个人配置（可选，看你要不要共享）
 .vscode/
