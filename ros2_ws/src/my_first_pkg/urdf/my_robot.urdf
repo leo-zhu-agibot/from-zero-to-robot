@@ -1,15 +1,33 @@
 <?xml version="1.0"?>
 <robot name="my_robot">
-
+<!-- base_link是机器人底盘的连接 -->
   <link name="base_link">
     <visual>
       <geometry>
-        <box size="0.6 0.4 0.2"/>   <!-- 长 宽 高，单位米，空格分隔 -->
+        <box size="0.6 0.4 0.2"/>
       </geometry>
-        <material name="blue"/>    <!-- 可选：加个 material 定义颜色 -->
-            <color rgba="0 0 1 1"/>   <!-- 蓝色，最后一个参数是透明度 -->
-        </material>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
     </visual>
   </link>
-
+<!-- arm_link是机械臂的连接 -->
+  <link name="arm_link">
+  <visual>
+    <geometry>
+      <box size="0.1 0.1 0.5"/>   <!-- 细长,像根杆 -->
+    </geometry>
+    <material name="red">
+      <color rgba="1 0 0 1"/>     <!-- 换个颜色好区分 -->
+    </material>
+  </visual>
+</link>
+<!-- kinematic是关节的连接,这里是躯干和手臂的连接 -->
+<joint name="base_to_arm" type="revolute">
+  <parent link="base_link"/>       <!-- 父:躯干 -->
+  <child link="arm_link"/>         <!-- 子:手臂 -->
+  <origin xyz="0 0 0.1" rpy="0 0 0"/>   <!-- 手臂接在 base 顶部 -->
+  <axis xyz="0 1 0"/>              <!-- 绕哪个轴转 -->
+  <limit lower="-1.57" upper="1.57" effort="10" velocity="1.0"/>
+</joint>
 </robot>
