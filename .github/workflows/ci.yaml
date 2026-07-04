@@ -1,0 +1,31 @@
+name: ROS2 CI                    # 流水线的名字，随便起，会显示在 GitHub 上
+
+on:                             # 「什么时候触发」
+  push:                         # 有人 push 时触发
+    branches: [ main ]          # 只在推到 main 分支时（可按需增减）
+  pull_request:                 # 有人开 PR 时也触发
+    branches: [ main ]
+
+jobs:                           # 「要做哪些活」，一个 workflow 可以有多个 job
+  build-and-test:               # job 的 id，自己起名
+    runs-on: ubuntu-latest      # 在什么机器上跑（GitHub 提供的全新 Ubuntu 虚拟机）
+
+    container:                  # ★关键：在这台机器里再套一个 Docker 容器
+      image: osrf/ros:jazzy-desktop            # 你填：用哪个镜像？(提示：和你本地 devcontainer 用的基础镜像一样)
+
+    steps:                      # 「按顺序做的每一步」
+      - name: Checkout code
+        uses: actions/checkout@v4   # 官方动作：把你的仓库代码拉到这台机器上
+
+      - name: Build
+        working-directory: ros2_ws   # 你填：colcon 该在哪个目录跑？(想想你的工作空间在仓库的哪一层)
+        run: |
+          source /opt/ros/jazzy/setup.bash
+          colcon build
+
+      - name: Test
+        working-directory: workspace/ros2_ws   # 同上
+        run: |
+          source /opt/ros/jazzy/setup.bash
+          colcon test
+          colcon test-result --verbose   # 把测试结果详细打印出来，失败时能看到原因
