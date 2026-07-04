@@ -26,7 +26,7 @@ jobs:                           # 「要做哪些活」，一个 workflow 可以
           colcon build
 
       - name: Test
-        working-directory: workspace/ros2_ws   # 同上
+        working-directory: ros2_ws   # 同上
         run: |
           source /opt/ros/jazzy/setup.bash
           colcon test
