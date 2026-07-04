@@ -12,7 +12,9 @@ jobs:                           # 「要做哪些活」，一个 workflow 可以
 
     container:                  # ★关键：在这台机器里再套一个 Docker 容器
       image: osrf/ros:jazzy-desktop            # 你填：用哪个镜像？(提示：和你本地 devcontainer 用的基础镜像一样)
-
+    defaults:              # ← 新增这三行
+      run:
+        shell: bash  
     steps:                      # 「按顺序做的每一步」
       - name: Checkout code
         uses: actions/checkout@v4   # 官方动作：把你的仓库代码拉到这台机器上
